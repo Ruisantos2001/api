@@ -1,4 +1,4 @@
-package paises.api.controller;
+package paises.api.pais;
 
 import paises.api.pais.Pais;
 

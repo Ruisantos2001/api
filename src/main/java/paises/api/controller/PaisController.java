@@ -4,9 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import paises.api.pais.DadoscriarPais;
-import paises.api.pais.Pais;
-import paises.api.pais.PaisRepository;
+import paises.api.pais.*;
 
 import java.util.List;
 
@@ -27,5 +25,12 @@ public class PaisController
     public List<DadosListagemPais> listar() //metódo para listar paises
     {
        return repository.findAll().stream().map(DadosListagemPais::new).toList();
+    }
+
+    @PutMapping
+    @Transactional
+    public void modificar(@RequestBody@Valid DadosmodificarPais dados)
+    {
+
     }
 }
