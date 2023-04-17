@@ -30,9 +30,10 @@ public class PaisController
 
     @GetMapping()
     @Cacheable(value="Lista de Paises")
-    public Page<DadosListagemPais> listar(@PageableDefault(size=10,sort={"nome"}) Pageable paginacao) //método para mostrar paises, e ordenar os países por qualquer uma das suas propriedades.
+    public ResponseEntity<Page<DadosListagemPais>> listar(@PageableDefault(size=10,sort={"nome"}) Pageable paginacao) //método para mostrar paises, e ordenar os países por qualquer uma das suas propriedades.
     {
-        return repository.findAll(paginacao).map(DadosListagemPais::new);
+        Page page =repository.findAll(paginacao).map(DadosListagemPais::new);
+        return ResponseEntity.ok(page);
     }
 
     @PutMapping
