@@ -2,6 +2,9 @@ package paises.api.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import paises.api.pais.*;
@@ -22,9 +25,9 @@ public class PaisController
     }
 
     @GetMapping() 
-    public List<DadosListagemPais> listar() //método para listar paises
+    public Page<DadosListagemPais> listar(@PageableDefault(size=10,sort={"nome"}) Pageable paginacao) //método para mostrar paises, e ordenar os países por qualquer uma das suas propriedades.
     {
-        return repository.findAll().stream().map(DadosListagemPais::new).toList();
+        return repository.findAll(paginacao).map(DadosListagemPais::new);
     }
 
     @PutMapping
