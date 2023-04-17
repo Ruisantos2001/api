@@ -10,6 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 import paises.api.pais.*;
 
 import java.util.List;
@@ -23,9 +24,13 @@ public class PaisController
     @PostMapping()
     @Transactional
     @CacheEvict(value="Lista de Paises",allEntries = true)//limpar a cache,todas entradas.
-    public void criar(@RequestBody @Valid DadoscriarPais dados) //método para criar um pais
+    public ResponseEntity criar(@RequestBody @Valid DadoscriarPais dados, UriComponentsBuilder uriBuilder) //método para criar um pais
     {
-        repository.save(new Pais(dados));
+        Pais pais=new Pais(dados);
+        repository.save(pais);
+        var uri = uriBuilder.path("/paises/{id}").buildAndExpand(pais.getId()).toUri();
+        return ResponseEntity.created(uri).body(new DadosDetalhadosPais(pais));
+        //uri representa o endereço que o spring vai usar para criar o cabecalho e  body,a informação que quero passar na resposta
     }
 
     @GetMapping()
