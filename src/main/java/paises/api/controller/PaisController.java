@@ -37,10 +37,11 @@ public class PaisController
 
     @PutMapping
     @Transactional
-    public void modificar(@RequestBody@Valid DadosmodificarPais dados)//método para modificar os dados de um país anteriormente criado
+    public ResponseEntity modificar(@RequestBody@Valid DadosmodificarPais dados)//método para modificar os dados de um país anteriormente criado
     {
         Pais pais=repository.getReferenceById(dados.id());
         pais.modificardados(dados);
+        return ResponseEntity.ok(new DadosDetalhadosPais(pais));
 
     }
 
