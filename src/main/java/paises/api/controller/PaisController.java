@@ -21,6 +21,7 @@ public class PaisController
 {
     @Autowired //para instanciar o repositorio sozinho
     private PaisRepository repository;
+
     @PostMapping()
     @Transactional
     @CacheEvict(value="Lista de Paises",allEntries = true)//limpar a cache,todas entradas.
@@ -57,5 +58,12 @@ public class PaisController
     {
        repository.deleteById(id);
        return ResponseEntity.noContent().build();//para notificar que esta requisição não retorna um conteudo
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar(@PathVariable Long id) //método para visualizar determinado pais
+    {
+        Pais pais = repository.getReferenceById(id);
+        return ResponseEntity.ok(new DadosDetalhadosPais(pais));
     }
 }
