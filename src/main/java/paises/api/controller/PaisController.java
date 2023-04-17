@@ -2,6 +2,8 @@ package paises.api.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -19,12 +21,14 @@ public class PaisController
     private PaisRepository repository;
     @PostMapping()
     @Transactional
+    @CacheEvict(value="Lista de Paises",allEntries = true)//limpar a cache,todas entradas.
     public void criar(@RequestBody @Valid DadoscriarPais dados) //método para criar um pais
     {
         repository.save(new Pais(dados));
     }
 
-    @GetMapping() 
+    @GetMapping()
+    @Cacheable(value="Lista de Paises")
     public Page<DadosListagemPais> listar(@PageableDefault(size=10,sort={"nome"}) Pageable paginacao) //método para mostrar paises, e ordenar os países por qualquer uma das suas propriedades.
     {
         return repository.findAll(paginacao).map(DadosListagemPais::new);
