@@ -28,4 +28,12 @@ public class Pais
          this.subregiao=dados.subregiao();
          this.area=dados.area();
      }
+
+     public void modificardados(DadosmodificarPais dados)
+     {
+         if(dados.capital()!=null)
+         this.capital=dados.capital();
+         if(dados.area()!=null)
+         this.area=dados.area();
+     }
 }

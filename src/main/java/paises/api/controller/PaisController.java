@@ -31,6 +31,8 @@ public class PaisController
     @Transactional
     public void modificar(@RequestBody@Valid DadosmodificarPais dados)
     {
+         Pais pais=repository.getReferenceById(dados.id());
+         pais.modificardados(dados);
 
     }
 }
