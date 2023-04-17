@@ -61,7 +61,7 @@ public class PaisController
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity detalhar(@PathVariable Long id) //método para visualizar determinado pais
+    public ResponseEntity visualizar(@PathVariable Long id) //método para visualizar determinado pais
     {
         Pais pais = repository.getReferenceById(id);
         return ResponseEntity.ok(new DadosDetalhadosPais(pais));
