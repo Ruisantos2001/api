@@ -16,23 +16,29 @@ public class PaisController
     private PaisRepository repository;
     @PostMapping()
     @Transactional
-    public void criar(@RequestBody @Valid DadoscriarPais dados) //metódo para criar um pais
+    public void criar(@RequestBody @Valid DadoscriarPais dados) //método para criar um pais
     {
-       repository.save(new Pais(dados));
+        repository.save(new Pais(dados));
     }
 
     @GetMapping() 
-    public List<DadosListagemPais> listar() //metódo para listar paises
+    public List<DadosListagemPais> listar() //método para listar paises
     {
-       return repository.findAll().stream().map(DadosListagemPais::new).toList();
+        return repository.findAll().stream().map(DadosListagemPais::new).toList();
     }
 
     @PutMapping
     @Transactional
-    public void modificar(@RequestBody@Valid DadosmodificarPais dados)
+    public void modificar(@RequestBody@Valid DadosmodificarPais dados)//método para modificar os dados de um país anteriormente criado
     {
-         Pais pais=repository.getReferenceById(dados.id());
-         pais.modificardados(dados);
+        Pais pais=repository.getReferenceById(dados.id());
+        pais.modificardados(dados);
+    }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void eliminar(@PathVariable Long id ) //método pathvariable indica que a variavel id e uma variavel do caminho.
+    {
+       repository.deleteById(id);
     }
 }
